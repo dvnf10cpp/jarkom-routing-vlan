@@ -306,12 +306,16 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    ```sh
    ping 192.68.10.2
    ```
+![img](./assets/SS_KELIMA.png)
+
    **Hasil yang diharapkan**: Perangkat dapat terhubung ke jaringan VLAN Product.
 
-2. Uji konektivitas dari VLAN Sales ke VLAN Developer:
+2. Uji konektivitas dari VLAN Developer ke VLAN Sales:
    ```sh
-   ping 192.68.20.2
+   ping 192.168.20.2
    ```
+![img](./assets/SS_KEENAM.png)
+   
    **Hasil yang diharapkan**: Perangkat dapat saling berkomunikasi antar LAN.
 
 3. Jika ada perangkat yang tidak bisa berkomunikasi, periksa langkah-langkah berikut:
