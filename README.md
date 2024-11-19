@@ -244,7 +244,8 @@ exit
 
 
 Kemudian melakukan routing dengan masuk terlebih dahulu ke dalam config dari router.
-Router0
+
+Pada Router0:
 ```zsh
 ip route 192.68.10.0 255.255.255.0 200.200.10.2
 ip route 192.68.10.0 255.255.255.0 200.200.10.2
@@ -258,7 +259,7 @@ sh ip route
 Dengan output yang benar seharusnya seperti di bawah:
 ![img](./assets/ss1.png)
 
-Router1
+Lanjut routing pada Router1:
 ```zsh
 ip route 192.168.10.0 255.255.255.0 200.200.10.1
 ip route 192.168.10.0 255.255.255.0 200.200.10.1
@@ -274,6 +275,12 @@ Dengan output yang benar seharusnya seperti di bawah:
 
 Jika semuanya sudah benar maka dapat diuji dengan melakukan ping atau tracert pada command prompt
 ```zsh
+ping [alamat IP]
+```
+
+```zsh
 tracert [alamat IP]
 ```
+
+Jika sudah terkoneksi dengan benar maka akan mendapatkan response pada hasil ping atau tracert seperti gambar di bawah ini
 ![img](./assets/ss3.png)
