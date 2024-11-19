@@ -220,15 +220,41 @@ Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa meli
 
 # Routing antar LAN
 
-Untuk routing antar LAN yang memiliki VLAN, saya berikan kalian kebebasan untuk turut membantu mengembangkan modul ini dengan melakukan fork repository ini, tambahkan section ini lalu bikin pull request dan kalian akan mendapatkan poin keaktifan +2 apabila konten yang kalian buat valid.
-
-Berikut ketentuan tugas bonus ini:
-- Deadline perancangan modul beserta konten section ```Routing antar LAN``` hari ini
-- Berisi langkah beserta screenshot yang jelas
-- Tiap langkah harus dibuat mengikuti kaidah seperti dibawah
+Masuk ke Router 0
+Kita akan mengkonfigurasikan interface Se0/0 
 
 ```zsh
-Langkah perintah harus dibungkus dengan code wrap zsh
+interface Serial0/0
+ip address 200.200.10.1 255.255.255.0
+no shutdown
+exit
 ```
 
-Yang paling rapih dan jelas akan dimerge ke repository ini dan mendapatkan poin keaktifan +6
+Kemudian kita akan melakukan static routing pada router 0
+
+```zsh
+ip route 194.68.10.0 255.255.255.0 200.200.10.2
+ip route 192.68.20.0 255.255.255.0 200.200.10.2
+```
+
+Pastikan semuanya benar, lihat routing table
+
+Masuk ke Router 1
+Kita akan mengkonfigurasikan interface Se0/0 
+
+```zsh
+interface Serial0/0
+ip address 200.200.10.2 255.255.255.0
+no shutdown
+exit
+```
+
+Kemudian kita akan melakukan static routing pada router 1
+
+```zsh
+ip route 192.168.10.0 255.255.255.0 200.200.10.1
+ip route 192.168.20.0 255.255.255.0 200.200.10.1
+ip route 192.168.30.0 255.255.255.0 200.200.10.1
+```
+
+Pastikan semuanya benar, lihat routing table
