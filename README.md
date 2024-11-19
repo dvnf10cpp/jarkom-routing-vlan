@@ -218,20 +218,22 @@ Apabila benar, maka harusnya muncul output seperti gambar dibawah ini
 
 Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa melihat bahwa ip setiap end device sudah otomatis di set ke DHCP apabila benar.
 
-# Routing antar LAN
+## Routing antar LAN
+Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kanan) dapat saling berkomunikasi, dengan melakukan konfigurasi routing statis pada kedua router. Routing statis akan memungkinkan router untuk mengetahui jalur ke jaringan lain melalui alamat gateway yang sudah ditentukan sehingga dapat mempermudah jalannya komunikasi antar end device. Berikut tutorial untuk melakukan routing.
 
-Agar perangkat di kedua LAN (LAN Kiri dan LAN Kanan) dapat saling berkomunikasi, konfigurasi routing statis diperlukan pada kedua router. Routing statis memungkinkan router untuk mengetahui jalur ke jaringan lain melalui alamat gateway yang sudah ditentukan.
-
-#### **Langkah-Langkah Routing Antar LAN**
+**Langkah-Langkah Routing Antar LAN**
 
 **a. Identifikasi Jaringan yang Akan Dihubungkan**
-- **LAN Kiri** memiliki tiga subnet:
+- **LAN Kiri** memiliki tiga VLAN:
   - VLAN 10 (HR): 192.168.10.0/24
   - VLAN 20 (Sales): 192.168.20.0/24
   - VLAN 30 (DHCP): 192.168.30.0/24
-- **LAN Kanan** memiliki dua subnet:
+![image](https://github.com/user-attachments/assets/77795f33-c5e1-4755-896d-c1bb2885fb69)
+
+- **LAN Kanan** memiliki dua VLAN:
   - VLAN 10 (Product): 192.68.10.0/24
   - VLAN 20 (Developer): 192.68.20.0/24
+    
 - **Jaringan Penghubung antar Router**:
   - Router LAN Kiri: 200.200.10.1
   - Router LAN Kanan: 200.200.10.2
