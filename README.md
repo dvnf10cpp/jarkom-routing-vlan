@@ -259,4 +259,4 @@ ip route 192.168.30.0 255.255.255.0 200.200.10.1
 
 Pastikan semuanya benar, lihat routing table
 
-![img](.assets/Screenshot%20from%202024-11-19%2020-31-55.png)
+![img](./assets/Screenshot%20from%202024-11-19%2020-31-55.png)
