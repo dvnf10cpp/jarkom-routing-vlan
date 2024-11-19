@@ -324,6 +324,6 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    - Pastikan semua routing statis ditambahkan dengan benar.
    - Lakukan tracert untuk mendeteksi kesalahan routing dengan tujuan alamat IP yang dituju, dengan contoh :
 
-     ![img](./assets/tracert.png)
+![img](./assets/tracert.png)
 
 
