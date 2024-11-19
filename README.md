@@ -9,7 +9,7 @@ PT Mencari Cinta melakukan permintaan untuk yang LAN kiri menggunakan DHCP Serve
 Sebagai network engineer, bantu PT mencari cinta untuk melakukan konfigurasi jaringan supaya masing2 VLAN bisa saling berkomunikasi satu sama lain
 
 Untuk konfigurasi packet tracer awal dapat diunduh pada file [Latihan VLAN 2.pkt](./pkt/latihan_vlan_2.pkt) atau bisa dilihat pada grup whatsapp.
-
+das,kdkads
 ## Konfigurasi VLAN pada LAN 1
 
 Masuk ke CLI Switch LAN 1 lalu ketikkan perintah berikut
