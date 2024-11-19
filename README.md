@@ -289,6 +289,7 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    S    192.68.10.0/24 [1/0] via 200.200.10.2
    S    192.68.20.0/24 [1/0] via 200.200.10.2
    ```
+![img](./assets/SS_KETIGA.png)
 
    Contoh output di Router LAN Kanan:
    ```
@@ -296,6 +297,7 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    S    192.168.20.0/24 [1/0] via 200.200.10.1
    S    192.168.30.0/24 [1/0] via 200.200.10.1
    ```
+![img](./assets/SS_KEEMPAT.png)
 
 ---
 
