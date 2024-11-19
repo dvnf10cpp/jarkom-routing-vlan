@@ -275,6 +275,8 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    - **192.168.30.0** adalah jaringan VLAN DHCP pada LAN Kiri.
    - **200.200.10.1** adalah alamat gateway (interface router LAN Kiri).
 
+![img](./assets/SS_KEDUA.png)
+
 **d. Verifikasi Routing Statis**
 1. Pada masing-masing router, gunakan perintah berikut untuk memverifikasi bahwa rute statis telah ditambahkan dengan benar:
    ```zsh
