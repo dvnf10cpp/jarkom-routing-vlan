@@ -322,8 +322,8 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    - Pastikan semua sub-interface pada router dalam status **up** (periksa dengan `sh ip int br`).
    - Verifikasi konfigurasi port trunk pada switch.
    - Pastikan semua routing statis ditambahkan dengan benar.
-   - Lakukan tracert, dengan contoh :
+   - Lakukan tracert untuk mendeteksi kesalahan routing dengan tujuan alamat IP yang dituju, dengan contoh :
 
-     ![img](./assets/SS_KEENAM.png)
+     ![img](./assets/tracert.png)
 
 
