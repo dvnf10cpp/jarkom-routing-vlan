@@ -228,17 +228,17 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
   - VLAN 10 (HR): 192.168.10.0/24
   - VLAN 20 (Sales): 192.168.20.0/24
   - VLAN 30 (DHCP): 192.168.30.0/24
-![img](./assets/VLAN KIRI.png)
+![img](./assets/VLAN%20KIRI.png)
 
 - **LAN Kanan** memiliki dua VLAN:
   - VLAN 10 (Product): 192.68.10.0/24
   - VLAN 20 (Developer): 192.68.20.0/24
-![img](./assets/VLAN KANAN.png)
+![img](./assets/VLAN%20KANAN.png)
     
 - **Jaringan Penghubung antar Router**:
   - Router LAN Kiri: 200.200.10.1
   - Router LAN Kanan: 200.200.10.2
-  ![img](./assets/VLAN TENGAH.png)
+  ![img](./assets/VLAN%20TENGAH.png)
 
 **b. Konfigurasi Routing pada Router LAN Kiri**
 1. Masuk ke CLI pada Router LAN Kiri.
