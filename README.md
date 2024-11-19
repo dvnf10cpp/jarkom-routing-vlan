@@ -218,17 +218,60 @@ Apabila benar, maka harusnya muncul output seperti gambar dibawah ini
 
 Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa melihat bahwa ip setiap end device sudah otomatis di set ke DHCP apabila benar.
 
-# Routing antar LAN
+# Menetapkan IP Routing antar LAN
 
-Untuk routing antar LAN yang memiliki VLAN, saya berikan kalian kebebasan untuk turut membantu mengembangkan modul ini dengan melakukan fork repository ini, tambahkan section ini lalu bikin pull request dan kalian akan mendapatkan poin keaktifan +2 apabila konten yang kalian buat valid.
-
-Berikut ketentuan tugas bonus ini:
-- Deadline perancangan modul beserta konten section ```Routing antar LAN``` hari ini
-- Berisi langkah beserta screenshot yang jelas
-- Tiap langkah harus dibuat mengikuti kaidah seperti dibawah
+Selanjutnnya mari kita set ip addreas di kedua router. Yang pertama set ipp addreas dan subnet mask router0 terlebih dahulu 
 
 ```zsh
-Langkah perintah harus dibungkus dengan code wrap zsh
+en
+conf t
+int s0/0
+ip add 200.200.10.1 255.255.255.0
+no sh
+ex
 ```
 
-Yang paling rapih dan jelas akan dimerge ke repository ini dan mendapatkan poin keaktifan +6
+Lalu selanjut set ipp addreas dan subnet mask router1 yang sebelah kiri 
+
+```zsh
+en
+conf t
+int s0/0
+ip add 200.200.10.2 255.255.255.0
+no sh
+ex
+```
+
+# Mensetting Routing antar LAN
+
+Selanjutnnya mari kita tentukan jalur antar jaringan melalui static route, kita set route0 telebih dahulu
+
+```zsh
+en
+conf t
+ip route 192.68.10.0 255.255.255.0 200.200.10.2
+ip route 192.68.200.0 255.255.255.0 200.200.10.2
+no sh
+ex
+```
+
+Lalu selanjut set static semua jalur jaringan yang melalui router1 disebalah kanan
+
+```zsh
+en
+conf t
+ip route 192.168.10.0 255.255.255.0 200.200.10.1
+ip route 192.168.200.0 255.255.255.0 200.200.10.1
+ex
+```
+
+# Untuk melihat apakah sudah benar dalam manambahkan ip addreas router dan jalur static
+
+Didalam langkah ini merupakan opsional tp alangkah baiknya dichek aja dengan cmd berikut
+
+```zsh
+en
+show ip route
+```
+
+# yeahhh berhasil
