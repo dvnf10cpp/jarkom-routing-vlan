@@ -257,6 +257,8 @@ Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kana
    - **192.68.20.0** adalah jaringan VLAN Developer pada LAN Kanan.
    - **200.200.10.2** adalah alamat gateway (interface router LAN Kanan).
 
+![img](./assets/SS_PERTAMA.png)
+
 **c. Konfigurasi Routing pada Router LAN Kanan**
 1. Masuk ke CLI pada Router LAN Kanan.
 2. Tambahkan rute statis ke jaringan di LAN Kiri dengan menggunakan perintah berikut:
