@@ -258,3 +258,5 @@ ip route 192.168.30.0 255.255.255.0 200.200.10.1
 ```
 
 Pastikan semuanya benar, lihat routing table
+
+![img](.assets/Screenshot from 2024-11-19 20-31-55.png)
