@@ -226,7 +226,7 @@ router0
 ```zsh
 enable
 conf t
-int 0/0
+int s0/0
 ip add 200.200.10.1 255.255.255.0
 no sh
 exit
@@ -236,7 +236,7 @@ router1
 ```zsh
 enable
 conf t
-int 0/0
+int s0/0
 ip add 200.200.10.2 255.255.255.0
 no sh
 exit
