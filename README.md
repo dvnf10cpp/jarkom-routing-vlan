@@ -235,7 +235,7 @@ Untuk mengecek apakah sudah berhasil melakukan routing maka dapat dilakukan peng
 sh ip route
 ```
 Dengan output yang benar seharusnya seperti di bawah:
-![img](./assets/Screenshot)
+![img](./assets/ss1.png)
 
 Router1
 ```zsh
@@ -249,9 +249,10 @@ Untuk mengecek apakah sudah berhasil melakukan routing maka dapat dilakukan peng
 sh ip route
 ```
 Dengan output yang benar seharusnya seperti di bawah:
-![img](./assets/Screenshot)
+![img](./assets/ss2.png)
 
 Jika semuanya sudah benar maka dapat diuji dengan melakukan ping atau tracert pada command prompt
 ```zsh
-ping [alamat IP]
+tracert [alamat IP]
 ```
+![img](./assets/ss3.png)
