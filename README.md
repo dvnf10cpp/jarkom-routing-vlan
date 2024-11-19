@@ -239,6 +239,8 @@ ip route 192.68.20.0 255.255.255.0 200.200.10.2
 
 Pastikan semuanya benar, lihat routing table
 
+![img](./assets/Screenshot%202024-11-19%20182153.png)
+
 Masuk ke Router 1
 Kita akan mengkonfigurasikan interface Se0/0 
 
