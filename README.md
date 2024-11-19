@@ -220,15 +220,90 @@ Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa meli
 
 # Routing antar LAN
 
-Untuk routing antar LAN yang memiliki VLAN, saya berikan kalian kebebasan untuk turut membantu mengembangkan modul ini dengan melakukan fork repository ini, tambahkan section ini lalu bikin pull request dan kalian akan mendapatkan poin keaktifan +2 apabila konten yang kalian buat valid.
+Agar perangkat di kedua LAN (LAN Kiri dan LAN Kanan) dapat saling berkomunikasi, konfigurasi routing statis diperlukan pada kedua router. Routing statis memungkinkan router untuk mengetahui jalur ke jaringan lain melalui alamat gateway yang sudah ditentukan.
 
-Berikut ketentuan tugas bonus ini:
-- Deadline perancangan modul beserta konten section ```Routing antar LAN``` hari ini
-- Berisi langkah beserta screenshot yang jelas
-- Tiap langkah harus dibuat mengikuti kaidah seperti dibawah
+#### **Langkah-Langkah Routing Antar LAN**
 
-```zsh
-Langkah perintah harus dibungkus dengan code wrap zsh
-```
+**a. Identifikasi Jaringan yang Akan Dihubungkan**
+- **LAN Kiri** memiliki tiga subnet:
+  - VLAN 10 (HR): 192.168.10.0/24
+  - VLAN 20 (Sales): 192.168.20.0/24
+  - VLAN 30 (DHCP): 192.168.30.0/24
+- **LAN Kanan** memiliki dua subnet:
+  - VLAN 10 (Product): 192.68.10.0/24
+  - VLAN 20 (Developer): 192.68.20.0/24
+- **Jaringan Penghubung antar Router**:
+  - Router LAN Kiri: 200.200.10.1
+  - Router LAN Kanan: 200.200.10.2
 
-Yang paling rapih dan jelas akan dimerge ke repository ini dan mendapatkan poin keaktifan +6
+**b. Konfigurasi Routing pada Router LAN Kiri**
+1. Masuk ke CLI pada Router LAN Kiri.
+2. Tambahkan rute statis ke jaringan di LAN Kanan dengan menggunakan perintah berikut:
+   ```zsh
+   enable
+   conf t
+   ip route 192.68.10.0 255.255.255.0 200.200.10.2
+   ip route 192.68.20.0 255.255.255.0 200.200.10.2
+   exit
+   ```
+   - **192.68.10.0** adalah jaringan VLAN Product pada LAN Kanan.
+   - **192.68.20.0** adalah jaringan VLAN Developer pada LAN Kanan.
+   - **200.200.10.2** adalah alamat gateway (interface router LAN Kanan).
+
+**c. Konfigurasi Routing pada Router LAN Kanan**
+1. Masuk ke CLI pada Router LAN Kanan.
+2. Tambahkan rute statis ke jaringan di LAN Kiri dengan menggunakan perintah berikut:
+   ```zsh
+   enable
+   conf t
+   ip route 192.168.10.0 255.255.255.0 200.200.10.1
+   ip route 192.168.20.0 255.255.255.0 200.200.10.1
+   ip route 192.168.30.0 255.255.255.0 200.200.10.1
+   exit
+   ```
+   - **192.168.10.0** adalah jaringan VLAN HR pada LAN Kiri.
+   - **192.168.20.0** adalah jaringan VLAN Sales pada LAN Kiri.
+   - **192.168.30.0** adalah jaringan VLAN DHCP pada LAN Kiri.
+   - **200.200.10.1** adalah alamat gateway (interface router LAN Kiri).
+
+**d. Verifikasi Routing Statis**
+1. Pada masing-masing router, gunakan perintah berikut untuk memverifikasi bahwa rute statis telah ditambahkan dengan benar:
+   ```zsh
+   sh ip route
+   ```
+   Anda harus melihat rute ke subnet yang dihubungkan dengan alamat gateway masing-masing.
+
+   Contoh output di Router LAN Kiri:
+   ```
+   S    192.68.10.0/24 [1/0] via 200.200.10.2
+   S    192.68.20.0/24 [1/0] via 200.200.10.2
+   ```
+
+   Contoh output di Router LAN Kanan:
+   ```
+   S    192.168.10.0/24 [1/0] via 200.200.10.1
+   S    192.168.20.0/24 [1/0] via 200.200.10.1
+   S    192.168.30.0/24 [1/0] via 200.200.10.1
+   ```
+
+---
+
+**e. Pengujian Routing Antar VLAN**
+1. Buka salah satu perangkat di VLAN HR (contoh: PC di 192.168.10.0/24) dan lakukan **ping** ke perangkat lain di LAN Kanan, seperti:
+   ```sh
+   ping 192.68.10.2
+   ```
+   **Hasil yang diharapkan**: Perangkat dapat terhubung ke jaringan VLAN Product.
+
+2. Uji konektivitas dari VLAN Sales ke VLAN Developer:
+   ```sh
+   ping 192.68.20.2
+   ```
+   **Hasil yang diharapkan**: Perangkat dapat saling berkomunikasi antar LAN.
+
+3. Jika ada perangkat yang tidak bisa berkomunikasi, periksa langkah-langkah berikut:
+   - Pastikan semua sub-interface pada router dalam status **up** (periksa dengan `sh ip int br`).
+   - Verifikasi konfigurasi port trunk pada switch.
+   - Pastikan semua routing statis ditambahkan dengan benar.
+
+
