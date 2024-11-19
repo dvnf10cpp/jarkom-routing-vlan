@@ -222,7 +222,28 @@ Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa meli
 
 Langkah pertama adalah menghubungkan kedua router dengan kabel serial dan melakukan konfigurasi alamat IP tiap interface serial dari masing-masing router.
 
-Masuk terlebih dahulu ke dalam config dari router.
+router0
+```zsh
+enable
+conf t
+int 0/0
+ip add 200.200.10.1 255.255.255.0
+no sh
+exit
+```
+
+router1
+```zsh
+enable
+conf t
+int 0/0
+ip add 200.200.10.2 255.255.255.0
+no sh
+exit
+```
+
+
+Kemudian melakukan routing dengan masuk terlebih dahulu ke dalam config dari router.
 Router0
 ```zsh
 ip route 192.68.10.0 255.255.255.0 200.200.10.2
