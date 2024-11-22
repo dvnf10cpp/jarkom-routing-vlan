@@ -218,17 +218,112 @@ Apabila benar, maka harusnya muncul output seperti gambar dibawah ini
 
 Setelah itu, buka PC pada salah satu LAN kanan, lalu seharusnya kalian bisa melihat bahwa ip setiap end device sudah otomatis di set ke DHCP apabila benar.
 
-# Routing antar LAN
+## Routing antar LAN
+Routing antar LAN diperlukan untuk perangkat di kedua LAN (LAN kiri dan LAN kanan) dapat saling berkomunikasi, dengan melakukan konfigurasi routing statis pada kedua router. Routing statis akan memungkinkan router untuk mengetahui jalur ke jaringan lain melalui alamat gateway yang sudah ditentukan sehingga dapat mempermudah jalannya komunikasi antar end device. Berikut tutorial untuk melakukan routing.
 
-Untuk routing antar LAN yang memiliki VLAN, saya berikan kalian kebebasan untuk turut membantu mengembangkan modul ini dengan melakukan fork repository ini, tambahkan section ini lalu bikin pull request dan kalian akan mendapatkan poin keaktifan +2 apabila konten yang kalian buat valid.
+**Langkah-Langkah Routing Antar LAN**
 
-Berikut ketentuan tugas bonus ini:
-- Deadline perancangan modul beserta konten section ```Routing antar LAN``` hari ini
-- Berisi langkah beserta screenshot yang jelas
-- Tiap langkah harus dibuat mengikuti kaidah seperti dibawah
+**a. Identifikasi Jaringan yang Akan Dihubungkan**
+- **LAN Kiri** memiliki tiga VLAN:
+  - VLAN 10 (HR): 192.168.10.0/24
+  - VLAN 20 (Sales): 192.168.20.0/24
+  - VLAN 30 (DHCP): 192.168.30.0/24
 
-```zsh
-Langkah perintah harus dibungkus dengan code wrap zsh
-```
+![img](./assets/VLAN%20KIRI.png)
 
-Yang paling rapih dan jelas akan dimerge ke repository ini dan mendapatkan poin keaktifan +6
+- **LAN Kanan** memiliki dua VLAN:
+  - VLAN 10 (Product): 192.68.10.0/24
+  - VLAN 20 (Developer): 192.68.20.0/24
+
+![img](./assets/VLAN%20KANAN.png)
+    
+- **Jaringan Penghubung antar Router**:
+  - Router LAN Kiri: 200.200.10.1
+  - Router LAN Kanan: 200.200.10.2
+
+![img](./assets/VLAN%20TENGAH.png)
+
+**b. Konfigurasi Routing pada Router LAN Kiri**
+1. Masuk ke CLI pada Router LAN Kiri.
+2. Tambahkan rute statis ke jaringan di LAN Kanan dengan menggunakan perintah berikut:
+   ```zsh
+   enable
+   conf t
+   ip route 192.68.10.0 255.255.255.0 200.200.10.2
+   ip route 192.68.20.0 255.255.255.0 200.200.10.2
+   exit
+   ```
+   - **192.68.10.0** adalah jaringan VLAN Product pada LAN Kanan.
+   - **192.68.20.0** adalah jaringan VLAN Developer pada LAN Kanan.
+   - **200.200.10.2** adalah alamat gateway (interface router LAN Kanan).
+
+![img](./assets/SS_PERTAMA.png)
+
+**c. Konfigurasi Routing pada Router LAN Kanan**
+1. Masuk ke CLI pada Router LAN Kanan.
+2. Tambahkan rute statis ke jaringan di LAN Kiri dengan menggunakan perintah berikut:
+   ```zsh
+   enable
+   conf t
+   ip route 192.168.10.0 255.255.255.0 200.200.10.1
+   ip route 192.168.20.0 255.255.255.0 200.200.10.1
+   ip route 192.168.30.0 255.255.255.0 200.200.10.1
+   exit
+   ```
+   - **192.168.10.0** adalah jaringan VLAN HR pada LAN Kiri.
+   - **192.168.20.0** adalah jaringan VLAN Sales pada LAN Kiri.
+   - **192.168.30.0** adalah jaringan VLAN DHCP pada LAN Kiri.
+   - **200.200.10.1** adalah alamat gateway (interface router LAN Kiri).
+
+![img](./assets/SS_KEDUA.png)
+
+**d. Verifikasi Routing Statis**
+1. Pada masing-masing router, gunakan perintah berikut untuk memverifikasi bahwa rute statis telah ditambahkan dengan benar:
+   ```zsh
+   sh ip route
+   ```
+   Anda harus melihat rute ke subnet yang dihubungkan dengan alamat gateway masing-masing.
+
+   Contoh output di Router LAN Kiri:
+   ```
+   S    192.68.10.0/24 [1/0] via 200.200.10.2
+   S    192.68.20.0/24 [1/0] via 200.200.10.2
+   ```
+![img](./assets/SS_KETIGA.png)
+
+   Contoh output di Router LAN Kanan:
+   ```
+   S    192.168.10.0/24 [1/0] via 200.200.10.1
+   S    192.168.20.0/24 [1/0] via 200.200.10.1
+   S    192.168.30.0/24 [1/0] via 200.200.10.1
+   ```
+![img](./assets/SS_KEEMPAT.png)
+
+---
+
+**e. Pengujian Routing Antar VLAN**
+1. Buka salah satu perangkat di VLAN HR (contoh: PC di 192.168.10.0/24) dan lakukan **ping** ke perangkat lain di LAN Kanan, seperti:
+   ```sh
+   ping 192.68.10.2
+   ```
+![img](./assets/SS_KELIMA.png)
+
+   **Hasil yang diharapkan**: Perangkat dapat terhubung ke jaringan VLAN Product.
+
+2. Uji konektivitas dari VLAN Developer ke VLAN Sales:
+   ```sh
+   ping 192.168.20.2
+   ```
+![img](./assets/SS_KEENAM.png)
+   
+   **Hasil yang diharapkan**: Perangkat dapat saling berkomunikasi antar LAN.
+
+3. Jika ada perangkat yang tidak bisa berkomunikasi, periksa langkah-langkah berikut:
+   - Pastikan semua sub-interface pada router dalam status **up** (periksa dengan `sh ip int br`).
+   - Verifikasi konfigurasi port trunk pada switch.
+   - Pastikan semua routing statis ditambahkan dengan benar.
+   - Lakukan tracert untuk mendeteksi kesalahan routing dengan tujuan alamat IP yang dituju, dengan contoh :
+
+![img](./assets/tracert.png)
+
+
